@@ -1,0 +1,2929 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A's Universe ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+    --bg: #070b18;
+    --panel: #10172b;
+    --white: #f1f2fa;
+    --muted: #969fbd;
+    --blue: #9eafff;
+    --line: rgba(180,195,255,0.16);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 0%, #172343 0%, transparent 55%),
+        var(--bg);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+button {
+    font: inherit;
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 35px 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.page.active {
+    display: flex;
+}
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.eyebrow {
+    color: var(--blue);
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: clamp(36px, 7vw, 65px);
+    line-height: 1.15;
+    margin: 0 0 16px;
+}
+
+h2 {
+    font-size: clamp(29px, 5vw, 43px);
+    margin: 0 0 12px;
+}
+
+h3 {
+    font-size: 23px;
+    margin: 12px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.counter {
+    margin: 26px auto 10px;
+    color: var(--blue);
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.progress-track {
+    width: min(300px, 85%);
+    height: 3px;
+    margin: 0 auto 18px;
+    background: #202944;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--blue);
+    transition: width .3s ease;
+}
+
+.star-field {
+    position: relative;
+    width: min(620px, 100%);
+    height: 300px;
+    margin: 0 auto 12px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(14,22,44,.55);
+    overflow: hidden;
+}
+
+
+.star {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #c7d1ff;
+    font-size: 25px;
+    cursor: pointer;
+    text-shadow: 0 0 12px #8ea5ff;
+
+    animation:
+        twinkle 1.8s ease-in-out infinite alternate,
+        floatStar 3s ease-in-out infinite;
+
+    transition: transform .2s, opacity .2s;
+    will-change: transform;
+}
+
+.star.shooting {
+    pointer-events: auto;
+    z-index: 10;
+    animation: shootingStar 1.1s ease-in forwards;
+}
+
+
+.star:hover {
+    transform: scale(1.5);
+    color: white;
+}
+
+.star:focus-visible {
+    outline: 1px solid var(--blue);
+    border-radius: 50%;
+}
+
+@keyframes twinkle {
+    from { opacity: .5; }
+    to { opacity: 1; }
+}
+
+
+@keyframes floatStar {
+    0%, 100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 -9px;
+    }
+}
+
+@keyframes shootingStar {
+    0% {
+        translate: 0 0;
+        scale: 1;
+        opacity: 1;
+        filter: brightness(1);
+    }
+    15% {
+        scale: 1.35;
+        opacity: 1;
+        filter: brightness(2);
+    }
+    100% {
+        translate: 160px -100px;
+        scale: .45;
+        opacity: 0;
+        filter: brightness(2);
+    }
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    min-height: 22px;
+    margin-bottom: 18px;
+}
+
+.primary-btn, .back-btn {
+    padding: 13px 23px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.primary-btn {
+    color: #080d1d;
+    background: var(--blue);
+    border: 1px solid var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.primary-btn:hover {
+    background: white;
+    border-color: white;
+    transform: translateY(-2px);
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.back-btn:hover {
+    border-color: var(--blue);
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.home-content {
+    width: 100%;
+    max-width: 760px;
+    margin: auto;
+}
+
+.menu-heading {
+    margin-bottom: 32px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.menu-card {
+    min-height: 175px;
+    padding: 24px;
+    text-align: left;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    background: linear-gradient(145deg, rgba(24,35,65,.85), rgba(12,17,34,.9));
+    color: var(--white);
+    cursor: pointer;
+    transition: .25s;
+}
+
+.menu-card:hover {
+    border-color: #8e9ff1;
+    transform: translateY(-4px);
+    background: #17213c;
+}
+
+.card-number {
+    color: var(--blue);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.card-icon {
+    display: block;
+    margin-top: 16px;
+    font-size: 24px;
+}
+
+.menu-card h3 {
+    margin: 9px 0 7px;
+    font-size: 21px;
+}
+
+.menu-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.panel {
+    width: 100%;
+    max-width: 650px;
+    padding: clamp(23px, 5vw, 42px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(15,22,43,.88);
+    text-align: left;
+}
+
+.panel-top {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.panel-symbol {
+    font-size: 29px;
+    margin-bottom: 15px;
+}
+
+.panel-label {
+    color: var(--blue);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.panel-copy {
+    color: #c3c9dc;
+    font-size: 14px;
+    line-height: 1.95;
+    white-space: pre-line;
+}
+
+.panel-copy p {
+    margin: 0 0 17px;
+}
+
+.panel-actions {
+    text-align: center;
+    margin-top: 28px;
+}
+
+.letter-content {
+    display: none;
+    margin-top: 25px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    animation: fadeIn .7s ease;
+}
+
+.letter-content.show {
+    display: block;
+}
+
+.letter-signature {
+    color: var(--blue);
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-style: italic;
+    margin-top: 25px;
+}
+
+.footer-note {
+    margin-top: 28px;
+    color: #707b9d;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 520px) {
+    .page {
+        padding: 25px 16px;
+    }
+
+    .star-field {
+        height: 280px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-card {
+        min-height: 140px;
+        padding: 20px;
+    }
+
+    .menu-heading {
+        margin-bottom: 23px;
+    }
+}
+    
+
+/* LITTLE THINGS - FLOATING PHOTO UNIVERSE */
+
+.memory-universe {
+    position: relative;
+    overflow: hidden;
+    padding: 30px 12px 40px;
+    border: 1px solid rgba(160, 177, 255, 0.16);
+    border-radius: 18px;
+    background:
+        radial-gradient(
+            ellipse at 50% 40%,
+            #192747 0%,
+            #0b1226 65%,
+            #070b18 100%
+        );
+}
+
+.memory-heading {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin: 0 auto 24px;
+}
+
+.memory-heading h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(23px, 4vw, 32px);
+    margin: 0 0 12px;
+}
+
+.memory-heading p {
+    color: #aab3d0;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.memory-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+        radial-gradient(2px 2px at 80% 15%, #aabaff, transparent),
+        radial-gradient(1px 1px at 40% 70%, #fff, transparent),
+        radial-gradient(2px 2px at 90% 80%, #b4c1ff, transparent),
+        radial-gradient(1px 1px at 20% 90%, #fff, transparent);
+    background-size: 170px 150px;
+    opacity: .65;
+}
+
+.memory-grid {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 24px 14px;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+
+.memory-photo {
+    position: relative;
+    flex: 0 0 145px;
+    width: 145px;
+    min-width: 0;
+    padding: 8px 8px 14px;
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 3px;
+    background: #e9e7f0;
+    color: #20253b;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    cursor: pointer;
+    text-align: center;
+    transform: rotate(var(--tilt, -3deg));
+    animation: photoFloat var(--duration, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    transition: border-color .25s, box-shadow .25s;
+}
+
+
+
+.memory-photo img {
+    display: block;
+    width: 100%;
+    height: 135px;
+    object-fit: cover;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+.memory-photo:hover,
+.memory-photo:focus-visible {
+    z-index: 3;
+    border-color: #b5c3ff;
+    box-shadow: 0 0 25px rgba(143,166,255,.45);
+    outline: none;
+}
+
+.memory-caption {
+    display: block;
+    margin-top: 9px;
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    text-align: center;
+}
+
+@keyframes photoFloat {
+    0%, 100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 -8px;
+    }
+}
+
+.memory-note {
+    text-align: center;
+    color: #8e9cc7;
+    font-size: 11px;
+    margin-top: 27px;
+    line-height: 1.8;
+}
+
+@media (max-width: 480px) {
+    .memory-grid {
+        gap: 20px 12px;
+    }
+
+    .memory-photo {
+        flex-basis: 115px;
+        width: 115px;
+    }
+
+
+    .memory-universe {
+        padding: 25px 12px 30px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .memory-photo {
+        animation: none;
+    }
+}
+
+
+    /* MEMORY DESCRIPTION POPUP */
+    
+.memory-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(3, 7, 20, 0.85);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+}
+
+.memory-modal.open {
+    display: flex !important;
+}
+
+
+    .memory-modal-card {
+        width: 100%;
+        max-width: 450px;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 28px 24px;
+        border: 1px solid rgba(160, 177, 255, 0.3);
+        border-radius: 18px;
+        background: #0d1730;
+        color: #f2f3ff;
+        text-align: center;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .memory-modal-card h3 {
+        margin: 15px 0;
+        font-family: 'Playfair Display', serif;
+        font-size: 25px;
+    }
+
+    .memory-modal-card p {
+        color: #c4cce5;
+        font-size: 14px;
+        line-height: 1.9;
+        white-space: pre-line;
+    }
+
+    .memory-close {
+        margin-top: 20px;
+        padding: 10px 22px;
+        border: 1px solid rgba(160, 177, 255, 0.4);
+        border-radius: 30px;
+        background: #192747;
+        color: white;
+        cursor: pointer;
+    }
+
+/* ===== 22 HARAPAN UNTUK KAMU ===== */
+
+
+
+.wish-universe {
+    width: 100%;
+    max-width: 900px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 35px 16px;
+    border: 1px solid rgba(160,177,255,.2);
+    border-radius: 20px;
+    background: radial-gradient(ellipse at 50% 35%, #1a294b, #0b1226 65%, #070b18);
+    color: #f5f1ff;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+
+
+.wish-heading {
+    text-align: center;
+    max-width: 520px;
+    margin: 0 auto 20px;
+}
+
+.wish-eyebrow {
+    color: #aebeff;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.wish-heading h2 {
+    margin: 12px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(25px, 5vw, 36px);
+}
+
+.wish-heading p {
+    color: #b9c3e0;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.wish-sky {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 360px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 15px;
+    background: radial-gradient(circle at 50% 50%, #172443, #0b1226 75%);
+}
+
+.wish-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.wish-line {
+    stroke: #a8bdff;
+    stroke-width: .35;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: wishLineDraw .8s ease forwards;
+    filter: drop-shadow(0 0 2px #a8bdff);
+}
+
+@keyframes wishLineDraw {
+    to { stroke-dashoffset: 0; }
+}
+
+.wish-stars {
+    position: absolute;
+    inset: 0;
+}
+
+.wish-star {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 42px;
+    padding: 0;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: transparent;
+    color: #ffe8a6;
+    cursor: pointer;
+}
+
+.wish-star .wish-symbol {
+    display: block;
+    font-size: 25px;
+    line-height: 1;
+    text-shadow: 0 0 8px #f8d98b;
+    animation: wishTwinkle 2s ease-in-out infinite;
+    animation-delay: var(--twinkle-delay, 0s);
+}
+
+.wish-star:hover .wish-symbol {
+    transform: scale(1.4);
+    color: white;
+}
+
+.wish-star .wish-index {
+    position: absolute;
+    top: 30px;
+    color: #b9c8f8;
+    font-size: 9px;
+}
+
+@keyframes wishTwinkle {
+    0%, 100% { opacity: .65; transform: scale(.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.wish-instruction {
+    margin-top: 18px;
+    color: #aab8e0;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.8;
+}
+
+.wish-popup {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 100000 !important;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(3,7,20,.86);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+}
+
+.wish-popup.open {
+    display: flex !important;
+}
+
+.wish-card {
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 28px 24px;
+    border: 1px solid rgba(160,177,255,.3);
+    border-radius: 18px;
+    background: #0d1730;
+    color: #f5f1ff;
+    text-align: center;
+    box-shadow: 0 0 35px rgba(143,166,255,.15);
+}
+
+.wish-number {
+    color: #b7c6ff;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.wish-card h3 {
+    margin: 15px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+}
+
+.wish-card p {
+    color: #c4cce5;
+    font-size: 14px;
+    line-height: 1.9;
+    white-space: pre-line;
+}
+
+.wish-close {
+    margin-top: 18px;
+    padding: 10px 22px;
+    border: 1px solid rgba(160,177,255,.4);
+    border-radius: 30px;
+    background: #192747;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .wish-universe { padding: 28px 10px; }
+    .wish-sky { height: 330px; }
+    .wish-star { width: 30px; }
+    .wish-star .wish-symbol { font-size: 22px; }
+    .wish-card { padding: 24px 18px; }
+}
+
+
+/* ===== LAYAR PEMBUKA ULANG TAHUN ===== */
+#birthdayIntro {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: radial-gradient(
+        circle at center,
+        #27335e 0%,
+        #11182f 50%,
+        #070b18 100%
+    );
+    color: #fff4f7;
+    text-align: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#birthdayIntro.intro-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#birthdayIntro .intro-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 35px 24px;
+    border: 1px solid rgba(255, 220, 235, 0.3);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 50px rgba(177, 145, 255, 0.12);
+    backdrop-filter: blur(8px);
+}
+
+#birthdayIntro .intro-moon {
+    color: #f8d9f0;
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+#birthdayIntro .intro-small {
+    letter-spacing: 3px;
+    font-size: 10px;
+    color: #d6c7ff;
+}
+
+#birthdayIntro h1 {
+    margin: 18px 0;
+    font-size: clamp(28px, 6vw, 42px);
+    line-height: 1.2;
+}
+
+#birthdayIntro .intro-message {
+    line-height: 1.8;
+    color: #e5e0f2;
+    font-size: 14px;
+}
+
+#birthdayIntro #openBirthdayBtn {
+    margin-top: 20px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #f4c7e7, #c8b8ff);
+    color: #17142b;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 25px rgba(210, 173, 255, 0.2);
+    transition: transform 0.2s ease;
+}
+
+#birthdayIntro #openBirthdayBtn:hover {
+    transform: scale(1.04);
+}
+
+#birthdayIntro #openBirthdayBtn:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+#birthdayIntro .intro-note {
+    margin-top: 22px;
+    font-size: 11px;
+    color: #c9c1df;
+}
+
+/* Pemutar musik tidak mengganggu tampilan */
+#birthdayMusicPlayer {
+    position: fixed;
+    width: 1px;
+    height: 1px;
+    left: -10px;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* ===== MINI GAME: FIND YOUR WAY HOME ===== */
+
+#missionGame {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 22px 14px;
+    background:
+        radial-gradient(ellipse at 50% 20%, #202e59 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 90%, #281a4b 0%, transparent 45%),
+        #070b18;
+    color: #f1f2fa;
+}
+
+#missionGame.active {
+    display: flex;
+}
+
+.mission-container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+}
+
+.mission-tag {
+    color: #aebeff;
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
+
+.mission-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 7vw, 48px);
+    line-height: 1.2;
+    margin: 0 0 12px;
+}
+
+.mission-description {
+    color: #b9c3e0;
+    font-size: 13px;
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 0 auto 22px;
+}
+
+.mission-progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px 0;
+}
+
+.mission-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #303b5e;
+}
+
+.mission-dot.done {
+    background: #b9c8ff;
+    box-shadow: 0 0 12px #8ea5ff;
+}
+
+.mission-arena {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: min(55vh, 380px);
+    min-height: 260px;
+    margin: 0 auto 18px;
+    overflow: hidden;
+    border: 1px solid rgba(174,190,255,.25);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at 50% 45%, #17264a, #0a1024 75%);
+    touch-action: none;
+    user-select: none;
+}
+
+.mission-arena::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 12% 20%, white, transparent),
+        radial-gradient(2px 2px at 80% 28%, #aebeff, transparent),
+        radial-gradient(1px 1px at 40% 78%, white, transparent),
+        radial-gradient(1px 1px at 90% 85%, white, transparent);
+    background-size: 130px 120px;
+    opacity: .65;
+}
+
+.mission-object {
+    position: absolute;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.mission-ship {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 82%;
+    width: 45px;
+    height: 45px;
+    display: grid;
+    place-items: center;
+    transform: translate(-50%, -50%);
+    font-size: 31px;
+    filter: drop-shadow(0 0 12px #9eafff);
+    pointer-events: none;
+}
+
+.mission-energy {
+    color: #ffe9a6;
+    font-size: 25px;
+    text-shadow: 0 0 12px #ffe9a6;
+    animation: missionGlow 1s ease-in-out infinite alternate;
+}
+
+.mission-asteroid {
+    font-size: 25px;
+    filter: drop-shadow(0 0 6px #a7b0d4);
+}
+
+@keyframes missionGlow {
+    from { opacity: .55; scale: .8; }
+    to { opacity: 1; scale: 1.2; }
+}
+
+.mission-score {
+    color: #d3dcff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin: 10px 0 18px;
+}
+
+.mission-message {
+    min-height: 26px;
+    color: #c7d2f7;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 12px auto;
+}
+
+.mission-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.mission-choice {
+    min-width: 100px;
+    padding: 13px 18px;
+    border: 1px solid rgba(174,190,255,.35);
+    border-radius: 14px;
+    background: rgba(23,34,65,.85);
+    color: #f1f2fa;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.mission-choice:hover {
+    border-color: #b9c8ff;
+    background: #27365d;
+    transform: translateY(-2px);
+}
+
+.mission-choice:disabled {
+    opacity: .45;
+    cursor: default;
+    transform: none;
+}
+
+.mission-symbol {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.mission-sequence {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.mission-memory-symbol {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(174,190,255,.25);
+    border-radius: 15px;
+    background: rgba(23,34,65,.8);
+    font-size: 25px;
+}
+
+.mission-memory-symbol.lit {
+    background: #596b9e;
+    box-shadow: 0 0 25px rgba(158,175,255,.65);
+}
+
+.mission-result-symbol {
+    font-size: 65px;
+    margin: 20px 0;
+    filter: drop-shadow(0 0 18px #a7b7ff);
+}
+
+@media (max-width: 480px) {
+    #missionGame {
+        padding: 18px 12px;
+    }
+
+    .mission-arena {
+        height: 42vh;
+        min-height: 250px;
+    }
+
+    .mission-choice {
+        min-width: 90px;
+        padding: 12px;
+    }
+
+    .mission-memory-symbol {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+
+/* ===== ROCKET VICTORY ANIMATION ===== */
+.victory-scene {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+    margin: 12px auto;
+    isolation: isolate;
+}
+
+.victory-rocket {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 65px;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    filter: drop-shadow(0 0 18px #9eb7ff);
+    z-index: 3;
+}
+
+.victory-rocket.launch {
+    animation: rocketLaunch 1.8s cubic-bezier(.35,.05,.7,.3) forwards;
+}
+
+.victory-star {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 22px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.victory-star.burst {
+    animation: starBurst 1.2s ease-out forwards;
+}
+
+.rocket-trail {
+    position: absolute;
+    left: 50%;
+    top: 56%;
+    width: 9px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(#a8c4ff, #a78bfa, transparent);
+    filter: blur(5px);
+    opacity: 0;
+    transform: translateX(-50%) rotate(-35deg);
+}
+
+.rocket-trail.active {
+    animation: trailLaunch 1.8s ease-in forwards;
+}
+
+@keyframes rocketLaunch {
+    0% {
+        transform: translate(-50%, -50%) rotate(-35deg) scale(1);
+        opacity: 1;
+    }
+    35% {
+        transform: translate(-25%, -75%) rotate(-35deg) scale(1.12);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(180%, -240%) rotate(-35deg) scale(.45);
+        opacity: 0;
+    }
+}
+
+@keyframes trailLaunch {
+    0% { opacity: 0; }
+    20% { opacity: .9; }
+    80% { opacity: .7; }
+    100% { opacity: 0; }
+}
+
+@keyframes starBurst {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(.4);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(
+            calc(-50% + var(--dx)),
+            calc(-50% + var(--dy))
+        ) scale(1.5) rotate(120deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .victory-rocket.launch,
+    .victory-star.burst,
+    .rocket-trail.active {
+        animation-duration: .01ms;
+    }
+}
+
+
+/* BIRTHDAY ENDING */
+#birthdayEnding {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 30px 20px;
+    background: radial-gradient(
+        ellipse at center,
+        #24345d 0%,
+        #101a35 50%,
+        #070b18 100%
+    );
+    color: #fff0c9;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#birthdayEnding.active {
+    display: flex;
+}
+
+.ending-content {
+    width: 100%;
+    max-width: 600px;
+    animation: endingFade 1.5s ease both;
+}
+
+.ending-stars {
+    color: #ffe7a3;
+    font-size: 26px;
+    letter-spacing: 8px;
+    animation: endingGlow 2s ease-in-out infinite alternate;
+}
+
+.ending-small {
+    margin-top: 30px;
+    color: #b9c9ff;
+    font-size: 10px;
+    letter-spacing: 4px;
+}
+
+.ending-content h1 {
+    margin: 25px 0;
+    font-family: Georgia, serif;
+    font-size: clamp(34px, 7vw, 52px);
+    line-height: 1.35;
+    font-weight: normal;
+    text-shadow: 0 0 25px rgba(255, 225, 160, .25);
+}
+
+.ending-from {
+    color: #d4dcf6;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+}
+
+.ending-heart {
+    margin: 25px 0;
+    color: #ffe5a0;
+    font-size: 30px;
+    animation: endingGlow 1.5s ease-in-out infinite alternate;
+}
+
+.bye-button {
+    margin-top: 15px;
+    padding: 13px 25px;
+    border: 1px solid #e7d39b;
+    border-radius: 30px;
+    background: transparent;
+    color: #ffe8b0;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.bye-button:hover {
+    background: rgba(255, 230, 160, .12);
+    transform: translateY(-3px);
+}
+
+.bye-message {
+    margin: 25px auto 0;
+    color: #e1e6f8;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.9;
+    animation: endingFade 1s ease both;
+}
+
+@keyframes endingFade {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes endingGlow {
+    from { opacity: .6; }
+    to {
+        opacity: 1;
+        text-shadow: 0 0 18px #ffe7a3;
+    }
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+<!-- MINI GAME: FIND YOUR WAY HOME -->
+<section id="missionGame">
+    <div class="mission-container">
+
+        <div class="mission-tag">A COSMIC ADVENTURE · 22</div>
+
+        <div id="missionContent">
+            <h1 class="mission-title">MISSION:<br>FIND YOUR WAY HOME</h1>
+
+            <p class="mission-description">
+                Your spaceship has lost its way.
+                Collect the energy, recover the signal,
+                and find the way back home. ♡
+            </p>
+
+            <div class="mission-progress">
+                <span class="mission-dot" id="missionDot1"></span>
+                <span class="mission-dot" id="missionDot2"></span>
+                <span class="mission-dot" id="missionDot3"></span>
+            </div>
+
+            <div class="mission-result-symbol">🚀</div>
+
+            <button class="primary-btn" id="missionStart" type="button">
+                START MISSION →
+            </button>
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- PAGE 1: COLLECT THE STARS -->
+<section id="game" class="page">
+    <div class="container">
+        <div class="eyebrow">A little universe, made for you</div>
+
+        <h1>Collect the stars<span style="color:#9eafff">.</span></h1>
+
+        <p class="subtitle">
+            Before you enter my universe,<br>
+            there are 22 little stars waiting for you.
+        </p>
+
+        <div class="counter" id="counter">STARS COLLECTED: 0 / 22</div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="star-field" id="starField"></div>
+
+        <div class="hint" id="hint">Click every star to collect it. ✦</div>
+
+        <button class="primary-btn hidden" id="nextButton" type="button">
+            ENTER MY UNIVERSE →
+        </button>
+
+        <div class="footer-note">A SMALL WORLD THAT BELONGS TO YOU</div>
+    </div>
+</section>
+
+
+<!-- PAGE 2: MAIN MENU -->
+<section id="home" class="page">
+    <div class="home-content">
+        <div class="menu-heading">
+            <div class="eyebrow">November 04, 2026 · Your 22nd birthday</div>
+            <h1>Welcome to <i>your</i> universe.</h1>
+            <p class="subtitle">
+                Four little corners of my heart,<br>
+                made into something you can keep.
+            </p>
+        </div>
+
+        <div class="menu-grid">
+            <button class="menu-card" onclick="openPanel('universe')" type="button">
+                <span class="card-number">01 / A LETTER</span>
+                <span class="card-icon">☾</span>
+                <h3>Your Universe</h3>
+                <p>Something I want you to know, on your special day.</p>
+            </button>
+
+            <button class="menu-card" onclick="openPanel('classified')" type="button">
+                <span class="card-number">02 / TOP SECRET</span>
+                <span class="card-icon">✧</span>
+                <h3>Classified: You</h3>
+                <p>A little file about the person you are to me.</p>
+            </button>
+
+            <button class="menu-card" onclick="openPanel('little')" type="button">
+                <span class="card-number">03 / THE DETAILS</span>
+                <span class="card-icon">♡</span>
+                <h3>Little Things</h3>
+                <p>The small things about you that stay with me.</p>
+            </button>
+
+            <button class="menu-card" onclick="openPanel('secret')" type="button">
+                <span class="card-number">04 / OPEN LAST</span>
+                <span class="card-icon">⋆</span>
+                <h3>One Last Thing</h3>
+                <p>One more thing I saved just for you.</p>
+            </button>
+
+
+<button class="menu-card" onclick="showPage('wishUniverse')" type="button">
+    <span class="card-number">05 / YOUR WISHES</span>
+    <span class="card-icon">✦</span>
+    <h3>22 Wishes</h3>
+    <p>Twenty-two little wishes, written just for you.</p>
+</button>
+
+
+        </div>
+
+        <div class="footer-note">NO MATTER HOW BIG THE UNIVERSE IS, I'M GLAD I FOUND YOU.</div>
+    </div>
+</section>
+
+
+<!-- PAGE 3: CARD DETAILS -->
+<section id="detail" class="page">
+    <div class="panel">
+        <div class="panel-top">
+            <div class="panel-symbol" id="panelSymbol">☾</div>
+            <div class="panel-label" id="panelLabel">A LETTER</div>
+            <h2 id="panelTitle">Your Universe</h2>
+        </div>
+
+        <div class="panel-copy" id="panelCopy"></div>
+
+        <div class="panel-actions" id="panelActions"></div>
+
+        <div class="panel-actions">
+            <button class="back-btn" onclick="showPage('home')" type="button">
+                ← BACK TO YOUR UNIVERSE
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<script>
+const starField = document.getElementById("starField");
+const counter = document.getElementById("counter");
+const progressFill = document.getElementById("progressFill");
+const hint = document.getElementById("hint");
+const nextButton = document.getElementById("nextButton");
+
+let collected = 0;
+const totalStars = 22;
+
+
+// CREATE THE 22 STARS
+
+
+function makeStarShoot() {
+    const stars = Array.from(
+        starField.querySelectorAll(".star:not(:disabled)")
+    );
+
+    if (stars.length === 0) return;
+
+    const star = stars[Math.floor(Math.random() * stars.length)];
+
+    star.classList.remove("shooting");
+
+    // Memulai ulang animasi jika bintang yang sama terpilih
+    void star.offsetWidth;
+
+    star.classList.add("shooting");
+
+    star.addEventListener("animationend", function resetStar(event) {
+        if (event.animationName !== "shootingStar") return;
+
+        star.classList.remove("shooting");
+        star.removeEventListener("animationend", resetStar);
+    });
+}
+
+
+const meteorInterval = setInterval(() => {
+    makeStarShoot();
+}, 5000);
+
+
+
+for (let i = 0; i < totalStars; i++) {
+    const star = document.createElement("button");
+
+    star.className = "star";
+    star.type = "button";
+    star.innerHTML = "✦";
+    star.setAttribute("aria-label", "Collect star");
+
+    star.style.left = (4 + Math.random() * 88) + "%";
+    star.style.top = (4 + Math.random() * 82) + "%";
+    star.style.animationDelay = (Math.random() * 2) + "s";
+
+    star.addEventListener("click", function () {
+        if (star.disabled) return;
+
+        playPop();
+        star.disabled = true;
+        star.style.display = "none";
+
+        collected++;
+
+        counter.textContent =
+            `STARS COLLECTED: ${collected} / ${totalStars}`;
+
+        progressFill.style.width =
+            (collected / totalStars * 100) + "%";
+
+        if (collected === totalStars) {
+            hint.textContent =
+                "Every star found. Now, come a little closer. ♡";
+
+            nextButton.classList.remove("hidden");
+        } else {
+            hint.textContent = "One more little light. ✦";
+        }
+    });
+
+    starField.appendChild(star);
+}
+
+
+// SMALL POP SOUND WHEN A STAR IS CLICKED
+function playPop() {
+    try {
+        const AudioContext =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContext) return;
+
+        const audio = new AudioContext();
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(700, audio.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(
+            1100, audio.currentTime + 0.07
+        );
+
+        gain.gain.setValueAtTime(0.12, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            0.001, audio.currentTime + 0.12
+        );
+
+        oscillator.start();
+        oscillator.stop(audio.currentTime + 0.12);
+
+        oscillator.onended = () => audio.close();
+    } catch (error) {
+        // The stars still work if the browser blocks sound.
+    }
+}
+
+
+// SWITCH BETWEEN PAGES
+
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(function (page) {
+        page.classList.remove("active");
+    });
+
+    const target = document.getElementById(pageId);
+
+    if (target) {
+        target.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+}
+
+
+
+
+nextButton.addEventListener("click", function () {
+    showPage("home");
+
+    if (window.playBirthdayMusic) {
+        window.playBirthdayMusic();
+    }
+});
+
+
+
+
+
+
+// CONTENT FOR THE FOUR MENU CARDS
+const panels = {
+    universe: {
+        symbol: "☾",
+        label: "A LETTER FOR YOU",
+        title: "Your Universe",
+        copy: `
+            <p>Happy 22nd birthday, you. ♡</p>
+            <p>
+                Selamat bertambah usia sayangku
+                Tepat hari ini, 22 tahun yang lalu kamu hadir ke dunia
+                Kamu hadir bersamaan dengan suka cita bagi orang tuamu
+            </p>
+            <p>
+                Hari demi hari kamu lewati, dari kamu yang belum ngerti apa-apa, sampai sekarang yang udah punya banyak cerita
+                Mungkin aku hanya orang yang mengisi sebagian kecil dari hari-harimu
+                Tapi aku akan berusaha untuk selalu jadi bagian kecil itu
+                Bagian kecil yang nggak akan pernah hilang dari apapun
+            </p>
+            <p>
+                Tuhan kasih kamu umur, kesempatan, waktu yang banyak di dunia ini
+                Dan kasih kita takdir buat ketemu
+                Aku harap waktu kita itu nggak akan pernah habis ya
+                Aku harap kamu juga berharap sama
+            </p>
+            <p>
+                Aku mau kamu tau kalau di tengah dunia kita yang kadang ngeselin ini
+                Selalu ada cara buat kita selalu kembali bahagia
+                Contohnya aku, yang merasa kalau hadirnya kamu bawa keinginan untuk hidupku balik lagi
+                Jadi, terima kasih ya
+            </p>
+            <p>
+                Doa dariku
+                Semoga di umurmu yang panjang ini, juga dikelilingi bahagia dan sehatmu bisa ku lihat selalu
+                Mari kita tumbuh lagi sama-sama
+                Terima kasih sudah ada di sisiku selalu
+            </p>
+            <p>Happy birthday, my favorite person. Here's to your 22nd year.</p>
+        `,
+        button: "NEXT ♡"
+    },
+
+    classified: {
+        symbol: "✧",
+        label: "CONFIDENTIAL FILE",
+        title: "Classified: You",
+        copy: `
+        NOMOR BERKAS: 022
+
+        SUBJEK: Kamu
+        STATUS: Lebih berarti daripada yang kamu kira.
+
+        KEBIASAAN YANG TERCATAT
+
+        Selalu video call aku
+        Ajakan makan tapi harus selalu aku yang nentuin dimana huh.
+        Jalan-jalan sore yang sederhana, tapi menyenangkan kalau sama kamu.
+
+        Katanya, hal-hal kecil nggak selalu berarti banyak.
+        Tapi anehnya, hal-hal kecil darimu justru jadi hal yang aku ingat.
+
+        BUKTI-BUKTI YANG DITEMUKAN
+
+        Warna favorit: Navy.
+        Makanan favorit: Apa pun yang ada kejunya sama nasi goreng Solaria.
+        Keahlian khusus: Main gitar woy jago kali ngegenjrengnya bang.
+
+        Ada satu hal yang mungkin nggak kamu sadari:
+        aku suka banget setiap kamu main gitar buat aku.
+        Aku bisa mendengarkan kamu main lebih lama
+        daripada yang mungkin kamu bayangkan. Ea.
+
+        MINAT DAN AKTIVITAS
+
+        Game: Suka banget.
+        Partner bermain: Aku, yang kadang memilih mundur
+        karena sadar kemampuan bermainku jago.
+
+        Otomotif: Topik yang bisa bikin obrolan kita panjang.
+        Mobil impian kamu, main tebak-tebakan mobil di jalan hahaha.
+
+        HASIL PENGAMATAN
+
+        Kamu termasuk orang yang berani mengatakan apa yang kamu pikirkan.
+        Kamu bisa blak-blakan saat memberi masukan,
+        bahkan ketika aku sendiri masih malu atau ragu.
+
+        Kamu punya cara pandang yang dewasa.
+        Kamu bijaksana, tahu kapan harus bicara,
+        dan nggak takut menyampaikan sesuatu yang menurutmu benar.
+
+        Mungkin kita memang berbeda dalam beberapa hal.
+        Aku lebih pemalu, sementara kamu lebih berani.
+        Tapi justru ada banyak hal darimu yang bisa aku pelajari.
+
+        KESIMPULAN AKHIR
+
+        Dari semua hal yang tercatat dalam berkas ini,
+        ada satu hal yang paling penting:
+
+        Aku suka mengenal kamu lebih jauh.
+        Bukan cuma hal-hal besar tentang dirimu,
+        tapi juga kebiasaan kecil yang mungkin kamu anggap biasa.
+
+        Karena buatku, mengenal kamu bukan cuma soal tahu siapa kamu.
+        Tapi juga tentang menemukan hal-hal baru
+        yang membuatku semakin mengerti dirimu.
+
+        STATUS BERKAS: Masih banyak yang ingin aku kenali. ♡
+        `
+    },
+
+    
+little: {
+    symbol: "♡",
+    label: "THE LITTLE DETAILS",
+    title: "Little Things",
+    copy: `
+        <div class="memory-universe">
+            <div class="memory-stars"></div>
+
+            <div class="memory-heading">
+                <h3>Six little moments,<br>a thousand feelings.</h3>
+                <p>
+                    Ada banyak hal kecil yang ingin aku simpan.<br>
+                    Pilih foto satu per satu untuk melihat ceritanya. ♡
+                </p>
+            </div>
+
+            <div class="memory-grid">
+
+                <button class="memory-photo"
+                    style="--tilt:-4deg;--duration:4s"
+                    onclick="openMemory(0)">
+                    
+                        <img src="foto1.jpg" alt="Gacoan Date Pertama">
+                    
+                    <span class="memory-caption">Gacoan Date Pertama</span>
+                </button>
+
+                <button class="memory-photo"
+                    style="--tilt:3deg;--duration:4.7s;--delay:-1s"
+                    onclick="openMemory(1)">
+                    
+                    
+                        <img src="foto2.jpg" alt="Photobooth Pertama">
+                   
+                    <span class="memory-caption">Photobooth Pertama</span>
+                </button>
+
+                <button class="memory-photo"
+                    style="--tilt:-2deg;--duration:4.3s;--delay:-2s"
+                    onclick="openMemory(2)">
+                    
+                        <img src="foto3.jpg" alt="Menggemoy Bersama Dimulai">
+                  
+                    <span class="memory-caption">Menggemoy Bersama Dimulai</span>
+                </button>
+
+                <button class="memory-photo"
+                    style="--tilt:3deg;--duration:5s;--delay:-.5s"
+                    onclick="openMemory(3)">
+                    
+                       
+                        <img src="foto4.jpg" alt="Dufan Date">
+                   
+                    <span class="memory-caption">Dufan Pertama Kita</span>
+                </button>
+
+                <button class="memory-photo"
+                    style="--tilt:-3deg;--duration:4.5s;--delay:-1.5s"
+                    onclick="openMemory(4)">
+                    
+                        <img src="foto5.jpg" alt="Kamu dan Kembaranmu">
+                  
+                    <span class="memory-caption">Kamu dan Kembaranmu</span>
+                </button>
+
+                <button class="memory-photo"
+                    style="--tilt:2deg;--duration:4.8s;--delay:-2.5s"
+                    onclick="openMemory(5)">
+                    
+                        <img src="foto6.jpg" alt="Foto Yang Paling Aku Suka">
+                  
+                    <span class="memory-caption">Foto Paling Aku Suka</span>
+                </button>
+
+            </div>
+
+            <div class="memory-note">
+                Take your time. These little moments are ours. ♡
+            </div>
+        </div>
+    `
+},
+
+    secret: {
+        symbol: "⋆",
+        label: "JUST BETWEEN US",
+        title: "One Last Thing",
+        copy: `
+            Kalau aku bisa memberikan satu hal untuk ulang tahunmu, aku ingin kamu bisa melihat dirimu sendiri melalui mataku, walau hanya sebentar.
+
+            Mungkin dengan begitu, kamu akan mengerti kenapa aku begitu menghargaimu, kenapa kehadiranmu berarti, dan kenapa aku senang kamu ada di dunia ini.
+
+            Kamu nggak harus menjadi sempurna.
+            Kamu nggak harus sudah memahami semuanya.
+            Kamu hanya perlu tetap menjadi dirimu sendiri, sambil terus tumbuh menjadi seseorang yang ingin kamu capai.
+
+            Jadi, ini harapan kecil terakhir dariku untuk ulang tahunmu.
+
+            Semoga di usia 22 tahun ini, hidup memperlakukanmu dengan baik.
+            emoga kamu menemukan banyak alasan untuk bangga pada dirimu sendiri.
+            Dan semoga ada lebih banyak hari baik yang datang kepadamu, bahkan lebih banyak dari yang kamu bayangkan.
+
+            Selamat ulang tahun.
+            Aku akan selalu mendukungmu. ♡
+
+        `
+    }
+};
+
+
+// OPEN A SELECTED CARD
+function openPanel(panelName) {
+    const panel = panels[panelName];
+
+    document.getElementById("panelSymbol").textContent = panel.symbol;
+    document.getElementById("panelLabel").textContent = panel.label;
+    document.getElementById("panelTitle").textContent = panel.title;
+
+    const copy = document.getElementById("panelCopy");
+    const actions = document.getElementById("panelActions");
+
+    copy.innerHTML = "";
+    actions.innerHTML = "";
+
+    if (panelName === "universe") {
+        copy.innerHTML = panel.copy;
+
+        const readButton = document.createElement("button");
+        readButton.className = "primary-btn";
+        readButton.type = "button";
+        readButton.textContent = panel.button;
+
+        const extraLetter = document.createElement("div");
+        extraLetter.className = "letter-content";
+        extraLetter.id = "letterContent";
+        extraLetter.innerHTML = `
+            <p>
+                And if there's one thing I hope you carry with you
+                from this little website, it's this:
+            </p>
+            <p>
+                You matter. Your dreams matter. Your happiness matters.
+                Even when life gets busy, I hope you make time for
+                yourself and the things that make you feel alive.
+            </p>
+            <p>
+                Thank you for all the moments we've shared so far.
+                I look forward to the little memories we haven't made yet.
+            </p>
+            <p>Here's to more laughter, more stories, and more us.</p>
+            <div class="letter-signature">With love, always. ♡</div>
+        `;
+
+        readButton.addEventListener("click", function () {
+            extraLetter.classList.add("show");
+            readButton.classList.add("hidden");
+            extraLetter.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        });
+
+        actions.appendChild(readButton);
+        actions.appendChild(extraLetter);
+    
+} else if (panelName === "little") {
+    copy.innerHTML = panel.copy;
+} else {
+    copy.textContent = panel.copy;
+}
+
+
+    showPage("detail");
+}
+
+
+const memories = [
+    {
+        title: "Gacoan Date Pertama",
+        description: "Ini diaaa salah satu date pertama kita, makan Gacoan bareng! Hahahaha. Kalau lihat foto ini sekarang, aku suka ketawa sendiri karena kamu masih kurus banget di sini, dut. Rasanya lucu ya kalau ingat awal-awal kita pergi bareng, karena sekarang udah banyak banget cerita dan tempat yang kita datengin. Mulai dari kamu jemput aku di Pocin, kamu anter aku pulang terus kita makan hehehe aku suka bgt deh. Kita harus bisa kayak gini terus yakk sampe nanti. ♡"
+    },
+    {
+        title: "Photobooth Pertama",
+        description: "Photobooth pertama kitaaa! Huuu, padahal seru tau punya foto yang bisa disimpan buat kenang-kenangan, tapi kayaknya kita jarang banget photobooth deh. Eh tapi pas kemarin anniv kita photobooth yakkk. Suka bgt lagi akuuu apalagi kamu beliin bunga terus pulangnya kita makan. ♡"
+    },
+    {
+        title: "Menggemoy Bersama Dimulai",
+        description: "Hahahahaha, katanya mau diet, dut? Terus ini apa ceritanya kita malah mulai sering jajan bareng. Ini foto waktu kita di Warung Uncal, Bogor lohhh! Aku masih mau ke sini lagi tau, soalnya kayaknya bakal seru kalau kita balik ke tempat yang pernah kita datengin, terus bikin kenangan baru lagi. Gimana, dut? Kita ke Warung Uncal lagi yukkk. Dietnya besok aja, hari ini jajan dulu WKWKWK. ♡"
+    },
+    {
+        title: "Dufan Pertama Kita",
+        description: "Jujurrrr, aku seneng banget waktu kita ke Dufan berdua untuk pertama kalinya! Sumpah yakk aku seneng bgtt, apalagi aku pertama kaliii. Makasiiih ya duuut, aku sayang bgt sama kamu huhu walaupun aku ilangin topi kamu WKWWKWK. Next kita kemana lagi? ♡"
+    },
+    {
+        title: "Kamu dan Kembaranmu",
+        description: "NAHHH, ini waktu kita pergi ke museum di Kota Tua terus kamu ketemu kembaran kamu sendiri WKWKWK. Aku masih ngerasa lucu kalau ingat momen ini, karena siapa juga yang nyangka kita bakal nemuin orang yang katanya mirip kamu di tengah jalan-jalan kita. Hal-hal random kayak gini yang bikin setiap jalan sama kamu punya ceritanya sendiri. Kadang bukan cuma tempatnya yang bikin seru, tapi kejadian-kejadian kecil yang nggak direncanain juga. Untung ada fotonya, jadi aku punya bukti kalau kamu pernah ketemu kembaran kamu hahahaha. ♡"
+    },
+    {
+        title: "Foto Paling Aku Suka",
+        description: "WOYYYY GILEEEEE, GANTENG BANGET COWO GUE INI 😭💗 Serius deh, dari sekian banyak foto kamu, aku suka banget sama foto yang ini. KOK BISA SE GANTENG INI SIHHH? Hahahahaha, maaf ya dut, pacarmu ini kadang suka heboh sendiri kalau lihat kamu ganteng. Tapi beneran, aku seneng bisa punya foto kamu yang bisa aku lihat kapan aja. Pokoknya ini salah satu foto favorit aku, titik. Jangan geer dulu yaaa, walaupun emang ganteng sih WKWKWK. ♡"
+    }
+];
+
+function openMemory(index) {
+    const memory = memories[index];
+
+    let modal = document.getElementById("memoryModal");
+
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "memoryModal";
+        modal.className = "memory-modal";
+
+        modal.innerHTML = `
+            <div class="memory-modal-card" role="dialog"
+                aria-modal="true" aria-labelledby="memoryTitle">
+                <div id="memoryNumber"
+                    class="panel-label"></div>
+                <h3 id="memoryTitle"></h3>
+                <p id="memoryDescription"></p>
+                <button class="memory-close" type="button"
+                    onclick="closeMemory()">
+                    Tutup ♡
+                </button>
+            </div>
+        `;
+
+        modal.addEventListener("click", function(event) {
+            if (event.target === modal) closeMemory();
+        });
+
+        document.body.appendChild(modal);
+    }
+
+    document.getElementById("memoryNumber").textContent =
+        "A LITTLE MEMORY · 0" + (index + 1);
+
+    document.getElementById("memoryTitle").textContent =
+        memory.title;
+
+    document.getElementById("memoryDescription").textContent =
+        memory.description;
+
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMemory() {
+    const modal = document.getElementById("memoryModal");
+
+    if (modal) modal.classList.remove("open");
+
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") closeMemory();
+});
+
+</script>
+
+
+<!-- 22 HARAPAN UNTUK KAMU -->
+<section class="wish-universe page" id="wishUniverse">
+    <div class="wish-heading">
+        <span class="wish-eyebrow">THIS SKY BELONGS TO YOU</span>
+        <h2>22 Harapan untuk Kamu</h2>
+        <p>Ada 22 bintang, dan setiap bintang menyimpan satu harapan dariku. ♡</p>
+    </div>
+
+    <div class="wish-sky" id="wishSky">
+        <svg class="wish-lines" id="wishLines"
+             viewBox="0 0 100 100"
+             preserveAspectRatio="none"
+             aria-hidden="true"></svg>
+        <div class="wish-stars" id="wishStars"></div>
+    </div>
+
+    <p class="wish-instruction">
+        ✦ Sentuh bintangnya, lalu temukan harapanmu ✦
+    </p>
+
+    <div class="wish-popup" id="wishPopup"
+         role="dialog" aria-modal="true"
+         aria-labelledby="wishTitle">
+        <div class="wish-card">
+            <span class="wish-number" id="wishNumber"></span>
+            <h3 id="wishTitle"></h3>
+            <p id="wishDescription"></p>
+            <button class="wish-close" id="wishClose" type="button">
+                Tutup ♡
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<section class="page" id="birthdayEnding">
+  <div class="ending-content">
+    <div class="ending-stars">✦ ⋆ ✧ ⋆ ✦</div>
+
+    <p class="ending-small">A LITTLE MESSAGE FOR YOU</p>
+
+    <h1>Selamat Ulang Tahun,<br>Sayang ♡</h1>
+
+    <p class="ending-from">with love, Sahara</p>
+
+    <div class="ending-heart">♡</div>
+
+    <button type="button" id="byeButton" class="bye-button">
+      Bye, My Love ♡
+    </button>
+
+    <p id="byeMessage" class="bye-message" hidden>
+      Sampai ketemu di cerita-cerita kita berikutnya.
+      <br>I love you, always. ♡
+    </p>
+  </div>
+</section>
+
+
+<script>
+    
+const birthdayWishes = [
+    { title: "Harapan #01", text: "Semoga kamu selalu sehat dan bahagia. ♡" },
+    { title: "Harapan #02", text: "Semoga rezekimu lancar, biar bisa sering-sering traktir aku WKWKWK." },
+    { title: "Harapan #03", text: "Semoga makin dewasa, bukan cuma makin lebar." },
+    { title: "Harapan #04", text: "Semoga semua urusanmu dimudahkan." },
+    { title: "Harapan #05", text: "Semoga dietmu berhasil. Amin, walaupun besok jajan lagi." },
+    { title: "Harapan #06", text: "Semoga kamu selalu punya alasan buat tersenyum." },
+    { title: "Harapan #07", text: "Semoga semua yang kamu usahakan membuahkan hasil." },
+    { title: "Harapan #08", text: "Semoga punya mobil impian kamu." },
+    { title: "Harapan #09", text: "Semoga kamu selalu dikelilingi orang-orang baik." },
+    { title: "Harapan #10", text: "Semoga kita punya lebih banyak kesempatan jalan-jalan bareng." },
+    { title: "Harapan #11", text: "Semoga gapernah begadang lagi" },
+    { title: "Harapan #12", text: "Semoga dompetmu tebal." },
+    { title: "Harapan #13", text: "Semoga gapernah ngambek kayak aku." },
+    { title: "Harapan #14", text: "Semoga makin ganteng y." },
+    { title: "Harapan #15", text: "Semoga kita selamanya" },
+    { title: "Harapan #16", text: "Semoga semakin dewasa" },
+    { title: "Harapan #17", text: "Semoga semua impian kecilmu satu per satu terwujud." },
+    { title: "Harapan #18", text: "Semoga orang-orang kesayanganmu sehat terus, biar bisa liat kamu sukses" },
+    { title: "Harapan #19", text: "Semoga kita punya banyak cerita lucu buat dikenang nanti." },
+    { title: "Harapan #20", text: "Semoga imo 5000" },
+    { title: "Harapan #21", text: "Semoga tahun ini dan selamanya lebih banyak bahagia daripada pusingnya." },
+    { title: "Harapan #22", text: "Dan semoga kamu tahu, ada aku yang selalu berharap hal-hal baik datang ke hidupmu. ♡" }
+];
+
+(function initBirthdayWishes() {
+    const sky = document.getElementById("wishSky");
+    const starsBox = document.getElementById("wishStars");
+    const linesBox = document.getElementById("wishLines");
+    const popup = document.getElementById("wishPopup");
+
+    if (!sky || !starsBox || !linesBox || !popup) return;
+
+    const points = [
+        [12,17],[31,10],[54,16],[80,12],[91,34],[69,35],
+        [43,30],[20,39],[8,57],[30,56],[51,51],[76,57],
+        [91,75],[67,78],[44,72],[19,82],[34,94],[57,91],
+        [81,94],[57,39],[39,43],[72,18]
+    ];
+
+   const ns = "http://www.w3.org/2000/svg";
+    let audioContext;
+
+    function playCrystalSound() {
+        try {
+            const AudioClass =
+                window.AudioContext || window.webkitAudioContext;
+            if (!AudioClass) return;
+
+            if (!audioContext) audioContext = new AudioClass();
+            if (audioContext.state === "suspended") {
+                audioContext.resume();
+            }
+
+            const now = audioContext.currentTime;
+
+            [1046.5, 1568].forEach((frequency, i) => {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                const start = now + i * 0.08;
+
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(frequency, start);
+                gain.gain.setValueAtTime(0.0001, start);
+                gain.gain.exponentialRampToValueAtTime(0.08, start + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.6);
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.start(start);
+                osc.stop(start + 0.65);
+            });
+        } catch (error) {}
+    }
+
+let openedStars = [];
+
+
+function drawConstellation(index) {
+    // Jangan menggambar ulang bintang yang sudah disentuh
+    if (openedStars.includes(index)) {
+        return;
+    }
+
+    // Simpan bintang yang baru disentuh
+    openedStars.push(index);
+
+    // Hubungkan bintang sebelumnya dengan bintang baru
+    if (openedStars.length >= 2) {
+        const previousIndex = openedStars[openedStars.length - 2];
+
+        const from = points[previousIndex];
+        const to = points[index];
+
+        const line = document.createElementNS(ns, "line");
+
+        line.setAttribute("x1", from[0]);
+        line.setAttribute("y1", from[1]);
+        line.setAttribute("x2", to[0]);
+        line.setAttribute("y2", to[1]);
+        line.setAttribute("class", "wish-line");
+
+        linesBox.appendChild(line);
+    }
+}
+
+
+
+    function closeWish() {
+        popup.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+
+    birthdayWishes.forEach((wish, index) => {
+        const star = document.createElement("button");
+
+        star.type = "button";
+        star.className = "wish-star";
+        star.style.left = points[index][0] + "%";
+        star.style.top = points[index][1] + "%";
+        star.style.setProperty("--twinkle-delay", (index % 7) * 0.23 + "s");
+        star.setAttribute("aria-label", "Buka harapan nomor " + (index + 1));
+
+        star.innerHTML =
+            '<span class="wish-symbol" aria-hidden="true">✦</span>' +
+            '<span class="wish-index">' +
+            String(index + 1).padStart(2, "0") +
+            '</span>';
+
+        star.addEventListener("click", () => {
+            drawConstellation(index);
+            playCrystalSound();
+
+            document.getElementById("wishNumber").textContent =
+                "SEBUAH HARAPAN · " +
+                String(index + 1).padStart(2, "0") + " / 22";
+
+            document.getElementById("wishTitle").textContent = wish.title;
+            document.getElementById("wishDescription").textContent = wish.text;
+
+            popup.classList.add("open");
+            document.body.style.overflow = "hidden";
+            
+if (openedStars.length === birthdayWishes.length) {
+    setTimeout(() => {
+        closeWish();
+        showPage("birthdayEnding");
+    }, 1200);
+}
+
+        });
+
+        starsBox.appendChild(star);
+    });
+
+    document.getElementById("wishClose").addEventListener(
+        "click", closeWish
+    );
+
+    popup.addEventListener("click", event => {
+        if (event.target === popup) closeWish();
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closeWish();
+    });
+})();
+
+
+</script>
+
+
+<!-- LAYAR PEMBUKA ULANG TAHUN -->
+<div id="birthdayIntro">
+    <div class="intro-card">
+        <div class="intro-moon">☾</div>
+
+        <p class="intro-small">A LITTLE SURPRISE FOR YOU</p>
+
+        <h1>Happy 22nd Birthday</h1>
+
+        <p class="intro-message">
+            Ada sesuatu yang ingin aku tunjukkan.
+            Siap membuka kejutanmu?
+        </p>
+
+        <button id="openBirthdayBtn">
+            ✨ Buka Kejutan ✨
+        </button>
+
+        <p class="intro-note">
+            Putar musik, lalu nikmati setiap bagiannya ♡
+        </p>
+    </div>
+</div>
+
+<!-- TEMPAT PEMUTAR MUSIK -->
+<div id="birthdayMusicPlayer" aria-hidden="true"></div>
+
+
+<script>
+(function setupBirthdayMusic() {
+    const intro = document.getElementById("birthdayIntro");
+    const button = document.getElementById("openBirthdayBtn");
+
+    if (!intro || !button) return;
+
+    let player = null;
+    let playerReady = false;
+    let clicked = false;
+    
+        window.playBirthdayMusic = function () {
+         if (playerReady && player) {
+            player.playVideo();
+    }
+};
+
+
+    window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player("birthdayMusicPlayer", {
+            width: "200",
+            height: "200",
+            videoId: "M-AMu_iAcf8",
+            playerVars: {
+                autoplay: 0,
+                controls: 0,
+                playsinline: 1
+            },
+            events: {
+                onReady: function (event) {
+                    player = event.target;
+                    playerReady = true;
+
+                    if (clicked) openWebsite();
+                }
+            }
+        });
+    };
+
+    
+function openWebsite() {
+    intro.classList.add("intro-hidden");
+
+    const missionGame = document.getElementById("missionGame");
+
+    if (missionGame) {
+        missionGame.classList.add("active");
+    }
+}
+
+
+    button.addEventListener("click", function () {
+        clicked = true;
+
+        if (playerReady) {
+            openWebsite();
+        } else {
+            button.textContent = "Menyiapkan musik...";
+            button.disabled = true;
+        }
+    });
+
+    const api = document.createElement("script");
+    api.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(api);
+})();
+</script>
+
+
+
+<script>
+(function setupMissionGame() {
+    const startButton = document.getElementById("missionStart");
+    const content = document.getElementById("missionContent");
+
+    if (!startButton || !content) return;
+
+
+    // ===== SOUND EFFECTS =====
+    let soundContext;
+
+    function playSFX(type) {
+        try {
+            const AudioClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioClass) return;
+
+            if (!soundContext) soundContext = new AudioClass();
+            if (soundContext.state === "suspended") soundContext.resume();
+
+            const sounds = {
+                success: [660, 880],
+                wrong: [220, 160],
+                collect: [880, 1175],
+                win: [523, 659, 784, 1047],
+                portal: [392, 587, 784]
+            };
+
+            const notes = sounds[type] || sounds.success;
+            const now = soundContext.currentTime;
+
+            notes.forEach((frequency, index) => {
+                const osc = soundContext.createOscillator();
+                const gain = soundContext.createGain();
+                const start = now + index * 0.12;
+                const duration = type === "wrong" ? 0.16 : 0.22;
+
+                osc.type = type === "wrong" ? "triangle" : "sine";
+                osc.frequency.setValueAtTime(frequency, start);
+                gain.gain.setValueAtTime(0.0001, start);
+                gain.gain.exponentialRampToValueAtTime(0.12, start + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+                osc.connect(gain);
+                gain.connect(soundContext.destination);
+                osc.start(start);
+                osc.stop(start + duration + 0.02);
+            });
+        } catch (error) {
+            console.warn("Sound effect tidak tersedia:", error);
+        }
+    }
+
+    // ===== START MISSION =====
+    startButton.addEventListener("click", startLevelOne);
+
+    // ===== LEVEL 1: COSMIC COLLECTOR =====
+    function startLevelOne() {
+        content.innerHTML = `
+            <div class="mission-tag">LEVEL 01 / 03</div>
+            <h2 class="mission-title">Cosmic Collector</h2>
+            <p class="mission-description">
+                Kumpulkan 10 kristal bercahaya dan hindari asteroid! ♡
+            </p>
+            <div class="mission-score">
+                ENERGY: <span id="energyScore">0</span> / 10
+            </div>
+            <div class="mission-arena" id="missionArena">
+                <div class="mission-ship" id="missionShip">🚀</div>
+            </div>
+            <p class="mission-message" id="missionMessage">
+                Geser kapal dengan jari atau mouse untuk mengambil kristal.
+            </p>
+            <button class="primary-btn" id="missionRestart" type="button">
+                ULANGI LEVEL
+            </button>
+        `;
+
+        const arena = document.getElementById("missionArena");
+        const ship = document.getElementById("missionShip");
+        const scoreText = document.getElementById("energyScore");
+        const message = document.getElementById("missionMessage");
+
+        let score = 0;
+        let objects = [];
+        let running = true;
+        let animationFrame;
+        let lastSpawn = 0;
+
+        const random = (min, max) => Math.random() * (max - min) + min;
+
+        function createObject(type) {
+            const element = document.createElement("div");
+            element.className = "mission-object " +
+                (type === "energy" ? "mission-energy" : "mission-asteroid");
+            element.textContent = type === "energy" ? "✦" : "☄";
+            element.style.left = random(7, 93) + "%";
+            element.style.top = "-8%";
+            element.style.width = "32px";
+            element.style.height = "32px";
+            arena.appendChild(element);
+
+            objects.push({
+                element,
+                type,
+                y: -8,
+                speed: type === "energy" ? random(0.18, 0.32) : random(0.12, 0.23)
+            });
+        }
+
+        function moveShip(event) {
+            if (!running) return;
+
+            const rect = arena.getBoundingClientRect();
+            const x = Math.max(6, Math.min(94,
+                ((event.clientX - rect.left) / rect.width) * 100));
+            const y = Math.max(12, Math.min(90,
+                ((event.clientY - rect.top) / rect.height) * 100));
+
+            ship.style.left = x + "%";
+            ship.style.top = y + "%";
+        }
+
+        arena.addEventListener("pointermove", moveShip);
+
+        function animate(timestamp) {
+            if (!running) return;
+
+            if (timestamp - lastSpawn > 550) {
+                createObject(Math.random() < 0.72 ? "energy" : "asteroid");
+                lastSpawn = timestamp;
+            }
+
+            const shipRect = ship.getBoundingClientRect();
+            const shipX = shipRect.left + shipRect.width / 2;
+            const shipY = shipRect.top + shipRect.height / 2;
+
+            objects = objects.filter(obj => {
+                obj.y += obj.speed;
+                obj.element.style.top = obj.y + "%";
+
+                const rect = obj.element.getBoundingClientRect();
+                const distance = Math.hypot(
+                    shipX - (rect.left + rect.width / 2),
+                    shipY - (rect.top + rect.height / 2)
+                );
+
+                if (distance < 25) {
+                    obj.element.remove();
+
+                    if (obj.type === "energy") {
+                        playSFX("collect");
+                        score++;
+                        scoreText.textContent = score;
+
+                        if (score >= 10) {
+                            finishLevel();
+                        }
+                    } else {
+                        playSFX("wrong");
+                        message.textContent =
+                            "Hati-hati, asteroid! Terus bergerak. ☄";
+                    }
+                    return false;
+                }
+
+                if (obj.y > 108) {
+                    obj.element.remove();
+                    return false;
+                }
+
+                return true;
+            });
+
+            if (running) animationFrame = requestAnimationFrame(animate);
+        }
+
+        function finishLevel() {
+            if (!running) return;
+            running = false;
+            cancelAnimationFrame(animationFrame);
+            arena.removeEventListener("pointermove", moveShip);
+            playSFX("win");
+
+            content.innerHTML = `
+                <div class="mission-tag">LEVEL 01 COMPLETE</div>
+                <div class="mission-result-symbol">✨</div>
+                <h2 class="mission-title">Energy Restored!</h2>
+                <p class="mission-description">
+                    Sepuluh kristal berhasil dikumpulkan. Kapalmu menyala lagi!
+                </p>
+                <button class="primary-btn" id="levelOneNext" type="button">
+                    LANJUT LEVEL 02 →
+                </button>
+            `;
+
+            document.getElementById("levelOneNext")
+                .addEventListener("click", startLevelTwo);
+        }
+
+        document.getElementById("missionRestart").addEventListener("click", () => {
+            running = false;
+            cancelAnimationFrame(animationFrame);
+            objects.forEach(obj => obj.element.remove());
+            startLevelOne();
+        });
+
+        animate(0);
+    }
+
+    // ===== LEVEL 2: LOST SIGNAL =====
+    function startLevelTwo() {
+        const symbols = ["☾", "☄", "🪐", "✦"];
+        const names = ["Bulan", "Komet", "Planet", "Bintang"];
+        let round = 1;
+        let sequence = [];
+        let playerIndex = 0;
+        let acceptingInput = false;
+        let roundToken = 0;
+
+        renderLevel();
+
+        function renderLevel() {
+            content.innerHTML = `
+                <div class="mission-tag">LEVEL 02 / 03 · ROUND ${round}/3</div>
+                <h2 class="mission-title">Lost Signal</h2>
+                <p class="mission-description">
+                    Ingat urutan simbol yang menyala, lalu ulangi urutannya.
+                </p>
+                <div class="mission-sequence">
+                    ${symbols.map((symbol, i) => `
+                        <div class="mission-memory-symbol" id="signal-${i}">
+                            ${symbol}
+                        </div>
+                    `).join("")}
+                </div>
+                <p class="mission-message" id="signalMessage">
+                    Perhatikan simbol yang menyala...
+                </p>
+                <div class="mission-controls">
+                    ${symbols.map((symbol, i) => `
+                        <button class="mission-choice" data-symbol="${i}" disabled type="button">
+                            <span class="mission-symbol">${symbol}</span>${names[i]}
+                        </button>
+                    `).join("")}
+                </div>
+            `;
+
+            content.querySelectorAll("[data-symbol]").forEach(button => {
+                button.addEventListener("click", () => {
+                    if (!acceptingInput) return;
+
+                    const chosen = Number(button.dataset.symbol);
+
+                    if (chosen !== sequence[playerIndex]) {
+                        playSFX("wrong");
+                        acceptingInput = false;
+                        document.getElementById("signalMessage").textContent =
+                            "Belum tepat! Coba lagi, ya. 💫";
+                        setTimeout(startRound, 900);
+                        return;
+                    }
+
+                    playSFX("success");
+                    playerIndex++;
+
+                    if (playerIndex === sequence.length) {
+                        acceptingInput = false;
+
+                        if (round < 3) {
+                            round++;
+                            document.getElementById("signalMessage").textContent =
+                                "Benar! Sinyal mulai kembali. ✨";
+                            setTimeout(renderLevel, 900);
+                        } else {
+                            showLevelTwoComplete();
+                        }
+                    } else {
+                        document.getElementById("signalMessage").textContent =
+                            `Benar! ${playerIndex}/${sequence.length}`;
+                    }
+                });
+            });
+
+            startRound();
+        }
+
+        function startRound() {
+            const token = ++roundToken;
+            sequence = Array.from(
+                { length: round + 2 },
+                () => Math.floor(Math.random() * symbols.length)
+            );
+            playerIndex = 0;
+            acceptingInput = false;
+
+            const message = document.getElementById("signalMessage");
+            if (message) message.textContent = "Perhatikan simbol yang menyala...";
+
+            content.querySelectorAll("[data-symbol]").forEach(button => {
+                button.disabled = true;
+            });
+
+            let index = 0;
+
+            function flashNext() {
+                if (token !== roundToken) return;
+
+                if (index >= sequence.length) {
+                    acceptingInput = true;
+                    content.querySelectorAll("[data-symbol]").forEach(button => {
+                        button.disabled = false;
+                    });
+                    document.getElementById("signalMessage").textContent =
+                        "Sekarang ulangi urutannya!";
+                    return;
+                }
+
+                const tile = document.getElementById(`signal-${sequence[index]}`);
+                if (tile) tile.classList.add("lit");
+
+                setTimeout(() => {
+                    if (token !== roundToken) return;
+                    if (tile) tile.classList.remove("lit");
+                    index++;
+                    setTimeout(flashNext, 300);
+                }, 550);
+            }
+
+            setTimeout(flashNext, 500);
+        }
+
+        function showLevelTwoComplete() {
+            content.innerHTML = `
+                <div class="mission-tag">LEVEL 02 COMPLETE</div>
+                <div class="mission-result-symbol">🌙</div>
+                <h2 class="mission-title">Signal Restored!</h2>
+                <p class="mission-description">
+                    Kamu berhasil mengingat semua urutan. Sinyal rumah ditemukan!
+                </p>
+                <button class="primary-btn" id="levelTwoNext" type="button">
+                    LANJUT LEVEL 03 →
+                </button>
+            `;
+
+            document.getElementById("levelTwoNext")
+                .addEventListener("click", startLevelThree);
+        }
+    }
+
+    // ===== LEVEL 3: MOON ESCAPE =====
+    function startLevelThree() {
+        let hasKey = false;
+        let hasEnergy = false;
+
+        content.innerHTML = `
+            <div class="mission-tag">LEVEL 03 / 03</div>
+            <h2 class="mission-title">Moon Escape</h2>
+            <p class="mission-description">
+                Cari kunci bulan dan kristal energi sebelum memilih portal pulang.
+            </p>
+            <div class="mission-progress">
+                <span class="mission-dot done"></span>
+                <span class="mission-dot done"></span>
+                <span class="mission-dot done"></span>
+            </div>
+            <div class="mission-arena" style="height:260px;min-height:260px;">
+                <button class="mission-choice" id="moonKey"
+                    style="position:absolute;left:16%;top:22%;min-width:0;" type="button">🔑</button>
+                <button class="mission-choice" id="moonEnergy"
+                    style="position:absolute;right:14%;top:28%;min-width:0;" type="button">✨</button>
+                <div style="position:absolute;left:50%;top:70%;transform:translate(-50%,-50%);font-size:48px;">🚀</div>
+            </div>
+            <p class="mission-score" id="moonInventory">
+                🔑 Kunci: belum ada | ✨ Energi: belum ada
+            </p>
+            <p class="mission-message" id="moonMessage">
+                Temukan kedua benda sebelum memasuki portal.
+            </p>
+            <div class="mission-controls">
+                <button class="mission-choice" id="moonPortalA" type="button">🌀 Portal A</button>
+                <button class="mission-choice" id="moonPortalB" type="button">🌌 Portal B</button>
+                <button class="mission-choice" id="moonPortalC" type="button">🌠 Portal C</button>
+            </div>
+        `;
+
+        const keyButton = document.getElementById("moonKey");
+        const energyButton = document.getElementById("moonEnergy");
+        const inventory = document.getElementById("moonInventory");
+        const message = document.getElementById("moonMessage");
+
+        keyButton.addEventListener("click", () => {
+            hasKey = true;
+            keyButton.textContent = "✅";
+            keyButton.disabled = true;
+            playSFX("collect");
+            updateInventory();
+            message.textContent = "Kunci bulan ditemukan! 🔑";
+        });
+
+        energyButton.addEventListener("click", () => {
+            hasEnergy = true;
+            energyButton.textContent = "✅";
+            energyButton.disabled = true;
+            playSFX("collect");
+            updateInventory();
+            message.textContent = "Kristal energi berhasil didapatkan! ✨";
+        });
+
+        function updateInventory() {
+            inventory.textContent =
+                `🔑 Kunci: ${hasKey ? "didapat" : "belum ada"} | ✨ Energi: ${hasEnergy ? "didapat" : "belum ada"}`;
+        }
+
+        ["A", "B", "C"].forEach(portal => {
+            document.getElementById("moonPortal" + portal).addEventListener("click", () => {
+                if (!hasKey || !hasEnergy) {
+                    playSFX("wrong");
+                    message.textContent =
+                        "Cari kunci bulan dan kristal energi dulu! 🌙";
+                    return;
+                }
+
+                if (portal !== "B") {
+                    playSFX("wrong");
+                    message.textContent = "Yahh, portalnya salah! 😭 Coba portal lain.";
+                    return;
+                }
+
+                showMissionComplete();
+            });
+        });
+    }
+
+    // ===== MISSION COMPLETE + ROCKET ANIMATION =====
+    function showMissionComplete() {
+        playSFX("win");
+
+        content.innerHTML = `
+            <div class="mission-tag">ALL MISSIONS COMPLETE</div>
+            <div class="victory-scene" id="victoryScene">
+                <div class="rocket-trail" id="rocketTrail"></div>
+                <div class="victory-rocket" id="victoryRocket">🚀</div>
+            </div>
+            <h2 class="mission-title">You Found Your Way Home!</h2>
+            <p class="mission-description" id="victoryMessage">
+                Semua misi berhasil! Tapi petualangan belum selesai. ♡
+            </p>
+            <button class="primary-btn" id="missionFinish" type="button">
+                LAUNCH INTO THE NEXT SURPRISE →
+            </button>
+        `;
+
+        const scene = document.getElementById("victoryScene");
+        const rocket = document.getElementById("victoryRocket");
+        const trail = document.getElementById("rocketTrail");
+        const finishButton = document.getElementById("missionFinish");
+
+        const positions = [
+            [-100, -50], [90, -80], [-130, 40], [120, 30],
+            [-60, 90], [60, 100], [150, -20], [-150, -10]
+        ];
+
+        positions.forEach((position, index) => {
+            const star = document.createElement("span");
+            star.className = "victory-star";
+            star.textContent = ["✦", "✨", "⋆", "⭐"][index % 4];
+            star.style.setProperty("--dx", position[0] + "px");
+            star.style.setProperty("--dy", position[1] + "px");
+            scene.appendChild(star);
+        });
+
+        finishButton.addEventListener("click", () => {
+            finishButton.disabled = true;
+            finishButton.textContent = "🚀 LAUNCHING...";
+            playSFX("portal");
+
+            scene.querySelectorAll(".victory-star").forEach((star, index) => {
+                setTimeout(() => star.classList.add("burst"), index * 65);
+            });
+
+            rocket.classList.add("launch");
+            trail.classList.add("active");
+
+            document.getElementById("victoryMessage").textContent =
+                "Roket meluncur menuju kejutan berikutnya! ✨";
+
+            setTimeout(() => {
+                content.innerHTML = `
+                    <div class="mission-tag">MISSION COMPLETE</div>
+                    <div class="mission-result-symbol">🌌</div>
+                    <h2 class="mission-title">Welcome Home!</h2>
+                    <p class="mission-description">
+                        Kamu berhasil melewati semua tantangan. Siap untuk kejutan berikutnya?
+                    </p>
+                    <button class="primary-btn" id="goToMusic" type="button">
+                        BUKA KEJUTAN →
+                    </button>
+                `;
+
+                
+                    
+
+
+document.getElementById("goToMusic").addEventListener("click", () => {
+    document.getElementById("missionGame").classList.remove("active");
+    document.getElementById("game").classList.add("active");
+});
+
+
+            }, 1900);
+        });
+    }
+
+
+    
+})();
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const byeButton = document.getElementById("byeButton");
+    const byeMessage = document.getElementById("byeMessage");
+
+    if (!byeButton || !byeMessage) return;
+
+    byeButton.addEventListener("click", () => {
+        if (byeMessage.hidden) {
+            byeMessage.hidden = false;
+            byeButton.textContent = "One Last Hug ♡";
+        } else {
+            window.location.reload();
+        }
+    });
+});
+
+
+
+</script>
+
+
+
+</body>
+</html>
+
